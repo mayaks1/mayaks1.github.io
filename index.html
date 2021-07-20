@@ -43,15 +43,38 @@
 					<div id="main">
 
 						<!-- Generator -->
-							<article id="Generator">
-								<h2 class="major">Generator</h2>
-								<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
-								<p> Where we put the text input box, output brings to another page (display) </p>
-								<form>
-									<form action="https://colab.research.google.com/drive/1v4GPpEzhgXlKHYves2wjN5W1M-Tfdoss?usp=sharing" method="get">
-									 Put in text here:<br> <input type="text" name="text", placeholder="Random Words">	
-               								<button type="submit">Send</button>
-								</form>
+							<script src="https://cdn.jsdelivr.net/npm/brython@3.8.10/brython.min.js"> </script> 
+							<script src="https://cdn.jsdelivr.net/npm/brython@3.8.10/brython_stdlib.js"> </script>
+								<article id="Generator">
+									<body onload="brython()">
+										<h2 class="major">Generator</h2>
+										<span class="image main"><img src="images/pic01.jpg" alt="" /></span>
+										<p> Where we put the text input box, output brings to another page (display) </p>
+										 Put in text here:<br> <input type="text" name="text", placeholder="Random Words">	
+										<button type="submit">Send</button>
+								    <!-- Ajax call -->
+								    <script type="text/python" id="script3">
+									from browser import document, ajax
+
+									url = 'https://api.chucknorris.io/jokes/random'
+
+									def on_complete(req):
+									    import json
+									    data = json.loads(req.responseText)
+									    joke = data['value']
+									    document['joke'].text = joke
+
+									def get_joke(e):
+									    req = ajax.ajax()
+									    req.open('GET', url, True)
+									    req.bind('complete', on_complete)
+									    document['joke'].text = 'Loading...'
+									    req.send()
+
+									document['joke-btn'].bind('click', get_joke)
+								    </script>
+								</body>
+						
 							</article>
 
 						<!-- Page2 -->
