@@ -1,2 +1,2 @@
-README tbd
+README
 project with Sage
